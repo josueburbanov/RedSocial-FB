@@ -6,7 +6,7 @@
 
 /**
  *
- * @author Josue Burbano Carapaz
+ 
  */
 public class Main {
     
