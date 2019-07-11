@@ -6,7 +6,7 @@
 
 /**
  *
- * @author josue.burbano
+ * @author Josue Burbano Carapaz
  */
 public class Main {
     
