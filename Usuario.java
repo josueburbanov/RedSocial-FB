@@ -1,5 +1,6 @@
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,6 +19,10 @@ public class Usuario implements Serializable{
     public String genero;
     public String fecha_nacimiento;
     public String info_adicional;
+    public ArrayList<Grupo>grupos;
+    public ArrayList<Usuario>amigos;
+    public ArrayList<Evento>eventos;
+    
     
     public Usuario(){
     nombre="";
@@ -25,22 +30,21 @@ public class Usuario implements Serializable{
     genero="";
     fecha_nacimiento="";
     info_adicional="";
+    grupos= new ArrayList();
+    amigos = new ArrayList();
+    eventos = new ArrayList();
      }
 
     @Override
     public String toString() {
-        String aux="\n\n********************************************\n\n";
-        return aux+"MI PERFIL\n\n" + "Nombre: " + nombre +"\nCorreo: " + correo +  "\nGenero: " + genero + "\nFecha de nacimiento: " + fecha_nacimiento + "\nSobre mí: " + info_adicional +aux; 
-    }
-
-public static void main(String args){
-        Usuario user = new Usuario();
-        user.nombre="Jimmy";
-        user.correo="jimmy.pardo@epn.edu.ec";
-        user.genero="Masculino";
-        user.fecha_nacimiento="6 de septiembre de 1994";
-        user.info_adicional="Me gusta la música ecuatoriana";
-        System.out.println(user);
+        
+        /*String evento ="";
+        for(Evento aux: eventos)
+        {
+            evento= evento+aux.toString();
+        }*/
+        String aux="********************************************";
+        return aux+"\nMI PERFIL\n\n" + "Nombre: " + nombre +"\nCorreo: " + correo +  "\nGenero: " + genero + "\nFecha de nacimiento: " + fecha_nacimiento + "\nSobre mí: " + info_adicional + "\n"+aux ; 
     }
 
 }
