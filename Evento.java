@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Jimmy
  */
 public class Evento implements Serializable {
     public String titulo;

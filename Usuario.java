@@ -9,10 +9,11 @@ import java.util.ArrayList;
  */
 
 /**
- *
- * @author Jimmy
+ * 
  */
 public class Usuario implements Serializable{
+    private static final long serialVersionUID = 2653714788738911068L;
+    
     public String nombre;
     public String correo;
     public String clave;
@@ -22,6 +23,7 @@ public class Usuario implements Serializable{
     public ArrayList<Grupo>grupos;
     public ArrayList<Usuario>amigos;
     public ArrayList<Evento>eventos;
+    public ArrayList<Solicitud>solicitudes;
     
     
     public Usuario(){
@@ -33,8 +35,18 @@ public class Usuario implements Serializable{
     grupos= new ArrayList();
     amigos = new ArrayList();
     eventos = new ArrayList();
+    solicitudes = new ArrayList();
      }
 
+    public void aceptarSolicitud(Solicitud solicitud){
+        if(solicitud.isAceptada()){
+            amigos.add(solicitud.getDe());   
+            solicitudes.remove(solicitud);
+        }
+    }
+    
+
+    
     @Override
     public String toString() {
         

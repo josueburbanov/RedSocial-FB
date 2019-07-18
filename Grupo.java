@@ -9,8 +9,7 @@ import java.util.ArrayList;
  */
 
 /**
- *
- * @author Jimmy
+ * 
  */
 public class Grupo implements Serializable{
     public String nombre;
