@@ -22,6 +22,7 @@ public class Grupo implements Serializable{
         descripcion="";
         publicaciones= new ArrayList();
     }
+    
 
     @Override
     public String toString() {

@@ -23,7 +23,7 @@ public class Tester {
     //Lista que carga todos los usuarios del fichero
     public static ArrayList<Usuario> Usuarios = new ArrayList();
     public static Usuario usuario_en_sesion = new Usuario();
-    public static String path_fichero = "C:\\Users\\josue.burbano\\Documents\\NetBeansProjects\\RedFacebookSocial\\Fichero.dat";
+    public static String path_fichero = "C:\\Users\\316\\Documents\\NetBeansProjects\\RedFacebookSocial\\Fichero.dat";
     public static boolean sesion = false;
 
     /**
@@ -49,7 +49,7 @@ public class Tester {
                     String auxclave = entradaEscaner.nextLine();
                     usuario_en_sesion = Login(auxnombre, auxclave);
                     while (sesion == true) {
-                        System.out.println("\nMENU\n1.-Ver perfil\n2.-Ver publicaciones\n3.-Grupos\n4.-Eventos\n5.-Amigos\n6.-Cerrar sesión");
+                        System.out.println("USUARIO EN LINEA: "+usuario_en_sesion.nombre+"\nMENU\n1.-Ver perfil\n2.-Ver publicaciones\n3.-Grupos\n4.-Eventos\n5.-Amigos\n6.-Cerrar sesión");
                         String opcion2 = entradaEscaner.nextLine();
                         switch (Integer.parseInt(opcion2)) {
                             case 1:
@@ -64,21 +64,34 @@ public class Tester {
                             case 3:
                                 System.out.println("\nGRUPOS\n1.-Ver grupos\n2.-Crear grupo");
                                 String opcion4 = entradaEscaner.nextLine();
+                                String espera2 ="99";
                                 switch (Integer.parseInt(opcion4)) {
                                     case 1:
                                         for (Grupo aux : usuario_en_sesion.grupos) {
                                             System.out.println(aux);
                                             System.out.println("\n1.-Unirse\t2.-Publicar\t3.-Continuar viendo");
-                                            String espera2 = entradaEscaner.nextLine();
+                                            espera2 = entradaEscaner.nextLine();
                                         }
                                         for (Usuario aux : usuario_en_sesion.amigos) {
                                             for (Grupo gv : aux.grupos) {
                                                 System.out.println(gv);
                                                 System.out.println("\n1.-Unirse\t2.-Publicar\t3.-Continuar viendo");
-                                                String espera2 = entradaEscaner.nextLine();
+                                                espera2 = entradaEscaner.nextLine();
 
                                             }
                                         }
+                                        //Empieza PUBLICAR EN GRUPO
+                                        switch(Integer.parseInt(espera2))
+                                        {
+                                            case 1:
+                                                
+                                                break;
+                                            
+                                            default:
+                                                
+                                            break;
+                                        }
+                                        //Finaliza PUBLICAR EN GRUPO        
                                         break;
 
                                     case 2:
@@ -100,25 +113,32 @@ public class Tester {
                                         for (Evento aux1 : usuario_en_sesion.eventos) {
                                             System.out.println(aux1);
                                             System.out.println("\n1.-Asistire\t2.-Me interesa\t3.-Continuar viendo");
-                                            String espera2 = entradaEscaner.nextLine();
-
-                                            if (espera2 == "1") {
-                                                aux1.asistiran.add(usuario_en_sesion);
-                                            } else if (espera2 == "2") {
-                                                aux1.interesados.add(usuario_en_sesion);
+                                            String espera22 = entradaEscaner.nextLine();
+                                            
+                                            if(espera22.equals("1"))
+                                            {
+                                                aux1.AddAssit(usuario_en_sesion);
+                                                System.out.println("Confirmado");
+                                                System.out.flush();
                                             }
-                                        }
-
-                                        for (Usuario aux2 : usuario_en_sesion.amigos) {
-                                            for (Evento ev : aux2.eventos) {
+                                            else if(espera22.equals("2"))
+                                            {
+                                                aux1.AddInteres(usuario_en_sesion);
+                                            }
+                                        
+                                        }       
+                                        
+                                        for(Usuario aux2 : usuario_en_sesion.amigos )
+                                        {
+                                            for(Evento ev : aux2.eventos)
+                                            {
                                                 System.out.println(ev);
                                                 System.out.println("\n1.-Asistire\t2.-Me interesa\t3.-Continuar viendo");
-                                                String espera2 = entradaEscaner.nextLine();
-                                                if (espera2 == "1") {
-                                                    ev.asistiran.add(usuario_en_sesion);
-                                                } else if (espera2 == "2") {
-                                                    ev.interesados.add(usuario_en_sesion);
-                                                }
+                                                String espera3 = entradaEscaner.nextLine();
+                                                if(espera3.equals("1"))
+                                                    ev.AddAssit(usuario_en_sesion);
+                                                else if(espera3.equals("2"))
+                                                    ev.AddInteres(usuario_en_sesion);
                                             }
                                         }
 
@@ -162,6 +182,7 @@ public class Tester {
                                         System.out.println("\nAGREGAR AMIGOS\n(Enter para ver siguiente sugerencia)\n1.-Enviar solicitud\n2.-Regresar");
                                         opcionAmigos = "";
                                         int i = 0;
+                                        if(Usuarios.size()!=1){
                                         while (opcionAmigos.equals("")) {
                                             if (!Usuarios.get(i).equals(usuario_en_sesion)) {
                                                 System.out.println("\n" + Usuarios.get(i));
@@ -173,6 +194,7 @@ public class Tester {
                                             }
                                             i++;
                                         }
+                                }
                                         i--;
                                         if (opcionAmigos.equals("1")) {
                                             if (Usuarios.get(i).solicitudes == null) {
@@ -219,12 +241,12 @@ public class Tester {
                                                 if (!(aux1.isAceptada()) && aux1.getDe() != null) {
                                                     System.out.println(aux1);
                                                     System.out.println("\n1.-Aceptar solicitud\t2.-Cancelar solicitud\t3.-Continuar viendo");
-                                                    String espera2 = entradaEscaner.nextLine();
+                                                    String espera3 = entradaEscaner.nextLine();
 
-                                                    if (espera2.equals("1")) {
+                                                    if (espera3.equals("1")) {
                                                         aux1.setAceptada(true);
                                                         usuario_en_sesion.aceptarSolicitud(aux1);
-                                                    } else if (espera2.equals("2")) {
+                                                    } else if (espera3.equals("2")) {
                                                         aux1.setAceptada(false);
                                                     }
                                                 }

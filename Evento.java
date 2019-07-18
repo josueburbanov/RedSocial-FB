@@ -29,10 +29,36 @@ public class Evento implements Serializable {
       interesados=new ArrayList();
       asistiran= new ArrayList();
     }
+    
+    public void AddAssit(Usuario assit)
+    {
+        if(!asistiran.contains(assit))
+        {
+            asistiran.add(assit);
+        }
+    }
+    
+    public void AddInteres(Usuario interest)
+    {
+        if(!interesados.contains(interest))
+        {
+            interesados.add(interest);
+        }
+    }
 
     @Override
     public String toString() {
-        return "\nEVENTO" + "\nTitulo: " + titulo + "\nHora: " + hora + "\nFecha: " + fecha + "\nLugar: " + lugar + "\nDescripcion: " + descripcion ;
+        String asistira="";
+        String interest="";
+        for(Usuario aux: asistiran)
+        {
+           asistira=asistira+"\t"+aux.nombre+" ,"; 
+        }
+        for(Usuario aux: interesados)
+        {
+           interest=interest+"\t"+aux.nombre; 
+        }
+        return "\nEVENTO" + "\nTitulo: " + titulo + "\nHora: " + hora + "\nFecha: " + fecha + "\nLugar: " + lugar + "\nDescripcion: " + descripcion +"\n\nAsistiran: "+asistira+"\nInteresados: "+interest;
     }
     
     
