@@ -23,7 +23,7 @@ public class Tester {
     //Lista que carga todos los usuarios del fichero
     public static ArrayList<Usuario> Usuarios = new ArrayList();
     public static Usuario usuario_en_sesion = new Usuario();
-    public static String path_fichero = "C:\\Users\\316\\Documents\\NetBeansProjects\\RedFacebookSocial\\Fichero.dat";
+    public static String path_fichero = "C:\\Fichero.txt";
     public static boolean sesion = false;
 
     /**
@@ -42,7 +42,7 @@ public class Tester {
             System.out.println("\nFACEBOOK\n\n1.-Login \n2.-Registrarse\n3.-Salir\n");
             //String op = entradaEscaner.nextLine();
             //opcion = Integer.parseInt(op);
-            opcion=ValidarOpcionMenu();
+            opcion = ValidarOpcionMenu();
             switch (opcion) {
                 case 1:
                     System.out.println("\nLOGIN\nIngrese nombre de usuario:");
@@ -74,18 +74,22 @@ public class Tester {
 
                                         break;
                                     case "2":
-                                        System.out.println("\nPublicar en el muro de un amigo\n1.Seleccionar amigo");
+                                        System.out.println("\nPublicar en el muro de un amigo\n1.Seleccionar amigo\nOtra tecla.- Volver a menú");
 
                                         String seleccionAmigo = "";
                                         String texto_pub = "";
                                         Usuario amigoPublicar = null;
-                                        for (Usuario amigo : usuario_en_sesion.amigos) {
-                                            seleccionAmigo = entradaEscaner.nextLine();
-                                            if (seleccionAmigo.equals("1")) {
-                                                amigoPublicar = amigo;
-                                                System.out.println("\nEscriba texto de publicación: ");
-                                                texto_pub = entradaEscaner.nextLine();
-                                                break;
+                                        if (usuario_en_sesion.amigos.size() == 0) {
+                                            System.out.println("\n<<<<<<Sin amigos por mostrar>>>>>");
+                                        } else {
+                                            for (Usuario amigo : usuario_en_sesion.amigos) {
+                                                seleccionAmigo = entradaEscaner.nextLine();
+                                                if (seleccionAmigo.equals("1")) {
+                                                    amigoPublicar = amigo;
+                                                    System.out.println("\nEscriba texto de publicación: ");
+                                                    texto_pub = entradaEscaner.nextLine();
+                                                    break;
+                                                }
                                             }
                                         }
 
@@ -102,21 +106,23 @@ public class Tester {
                                         if (usuario_en_sesion.publicaciones == null) {
                                             usuario_en_sesion.publicaciones = new ArrayList<>();
                                         }
-                                        for (Publicación iter: usuario_en_sesion.publicaciones) {
-                                            System.out.println(iter);
-                                            
-                                        }
 
+                                        if (usuario_en_sesion.publicaciones.size() == 0) {
+                                            System.out.println("\n<<<<<<Sin publicaciones por mostrar>>>>>");
+                                        } else {
+                                            for (Publicación iter : usuario_en_sesion.publicaciones) {
+                                                System.out.println(iter);
+                                            }
+                                        }
                                         break;
                                 }
-
                                 break;
 
                             case 3:
-                                System.out.println("\nGRUPOS\n1.-Ver mis grupos\n2.-Unirse a grupos\n3.-Crear grupo");
-                                
+                                System.out.println("\nGRUPOS\n1.-Ver mis grupos\n2.-Unirse a grupos\n3.-Crear grupo\nOtra tecla.-Volver al menú");
+
                                 int opcion4 = ValidarOpcionMenu();
-                                int espera2=9;
+                                int espera2 = 9;
                                 switch (opcion4) {
                                     case 1:
                                         for (Grupo aux : usuario_en_sesion.grupos) {
@@ -124,29 +130,28 @@ public class Tester {
                                             System.out.println("\n1.-Publicar\t2.-Siguiente grupo");
                                             espera2 = ValidarOpcionMenu();
                                             //Empieza UNIRSE/PUBLICAR/CONTINUAR EN GRUPO
-                                        switch (espera2) {
-                                            case 1:
-                                             
-                                                //Publicar
-                                                System.out.println("\nPublicar en el grupo\nEscriba aquí el texto de la publicación: ");
-                                                String txtpubli = entradaEscaner.nextLine();
-                                                aux.AgregarPublicacion(new Publicación(txtpubli,usuario_en_sesion));
-                                               
-                                                
-                                                break;
-                                                                                                                                    
-                                            default:
+                                            switch (espera2) {
+                                                case 1:
 
-                                                break;
-                                        }
-                                        //Finaliza PUBLICAR EN GRUPO        
+                                                    //Publicar
+                                                    System.out.println("\nPublicar en el grupo\nEscriba aquí el texto de la publicación: ");
+                                                    String txtpubli = entradaEscaner.nextLine();
+                                                    aux.AgregarPublicacion(new Publicación(txtpubli, usuario_en_sesion));
+
+                                                    break;
+
+                                                default:
+
+                                                    break;
+                                            }
+                                            //Finaliza PUBLICAR EN GRUPO        
 
                                         }
                                         System.out.println("<<<< Fin de grupos >>>>");
                                         break;
-                                                                            
+
                                     case 2:
-                                        
+
                                         //Unirme a grupos
                                         for (Usuario aux : usuario_en_sesion.amigos) {
                                             for (Grupo gv : aux.grupos) {
@@ -154,26 +159,25 @@ public class Tester {
                                                 System.out.println("\n1.-Unirme\t2.-Siguiente grupo");
                                                 espera2 = ValidarOpcionMenu();
                                                 //Empieza UNIRSE/PUBLICAR/CONTINUAR EN GRUPO
-                                        switch (espera2) {
-                                            
-                                            case 1:
-                                            //Unirme
-                                            usuario_en_sesion.AgregarGrupo(gv);
-                                            
-                                                
-                                                break;
-                                            
-                                            case 2:
-                                                
-                                                break;
-                                            default:
+                                                switch (espera2) {
 
-                                                break;
-                                                        }
-                                        //Finaliza PUBLICAR EN GRUPO        
+                                                    case 1:
+                                                        //Unirme
+                                                        usuario_en_sesion.AgregarGrupo(gv);
+
+                                                        break;
+
+                                                    case 2:
+
+                                                        break;
+                                                    default:
+
+                                                        break;
+                                                }
+                                                //Finaliza PUBLICAR EN GRUPO        
                                             }
                                         }
-                                            System.out.println("<<<< Fin de grupos >>>>");
+                                        System.out.println("<<<< Fin de grupos >>>>");
                                         break;
                                     case 3:
                                         Grupo aux = new Grupo();
@@ -193,7 +197,7 @@ public class Tester {
                                     case 1:
                                         for (Evento aux1 : usuario_en_sesion.eventos) {
                                             System.out.println(aux1);
-                                            System.out.println("\n1.-Asistire\t2.-Me interesa\t3.-Continuar viendo");
+                                            System.out.println("\n1.-Asistiré\t2.-Me interesa\t3.-Continuar viendo");
                                             String espera22 = entradaEscaner.nextLine();
 
                                             if (espera22.equals("1")) {
@@ -209,7 +213,7 @@ public class Tester {
                                         for (Usuario aux2 : usuario_en_sesion.amigos) {
                                             for (Evento ev : aux2.eventos) {
                                                 System.out.println(ev);
-                                                System.out.println("\n1.-Asistire\t2.-Me interesa\t3.-Siguiente evento");
+                                                System.out.println("\n1.-Asistiré\t2.-Me interesa\t3.-Siguiente evento");
                                                 String espera3 = entradaEscaner.nextLine();
                                                 if (espera3.equals("1")) {
                                                     ev.AddAssit(usuario_en_sesion);
@@ -264,15 +268,17 @@ public class Tester {
                                                 if (!Usuarios.get(i).equals(usuario_en_sesion)) {
                                                     System.out.println("\n" + Usuarios.get(i));
                                                     opcionAmigos = entradaEscaner.nextLine();
+                                                    if (opcionAmigos.equals("1")) {
+                                                        break;
+                                                    }
                                                 }
-                                                if (i == Usuarios.size()) {
+                                                if (i + 1 == Usuarios.size()) {
                                                     System.out.println("\n<<<<<<Fin lista de amigos>>>>>");
                                                     opcionAmigos = "2";
                                                 }
                                                 i++;
                                             }
                                         }
-                                        i--;
                                         if (opcionAmigos.equals("1")) {
                                             if (Usuarios.get(i).solicitudes == null) {
                                                 Usuarios.get(i).solicitudes = new ArrayList<>();
@@ -296,41 +302,34 @@ public class Tester {
                                                     usuario_en_sesion.solicitudes = new ArrayList<>();
                                                 }
                                                 for (Solicitud solicitudAux : usuario_en_sesion.solicitudes) {
-                                                    if (solicitudAux.getPara() != null) {
+                                                    if (solicitudAux.getDe() == null) {
                                                         System.out.println(solicitudAux);
                                                     }
                                                 }
                                                 break;
                                             case 2:
                                                 System.out.println("\nSolicitudes recibidas");
-                                                if (usuario_en_sesion.solicitudes == null) {
-                                                    usuario_en_sesion.solicitudes = new ArrayList<>();
-                                                }
-                                                for (Solicitud solicitudAux : usuario_en_sesion.solicitudes) {
-                                                    if (solicitudAux.getDe() != null) {
-                                                        System.out.println(solicitudAux);
+
+                                                if (usuario_en_sesion.solicitudes != null) {
+                                                    for (Solicitud aux1 : usuario_en_sesion.solicitudes) {
+                                                        if (!(aux1.isAceptada()) && aux1.getDe() != null) {
+                                                            System.out.println(aux1);
+                                                            System.out.println("\n1.-Aceptar solicitud\t2.-Cancelar solicitud\t3.-Continuar viendo");
+                                                            String espera3 = entradaEscaner.nextLine();
+
+                                                            if (espera3.equals("1")) {
+                                                                aux1.setAceptada(true);
+                                                                usuario_en_sesion.aceptarSolicitud(aux1, aux1.getDe());
+                                                            } else if (espera3.equals("2")) {
+                                                                aux1.setAceptada(false);
+                                                            }
+                                                        }
+
                                                     }
+                                                } else {
+                                                    System.out.println("\n<<<<<<Sin solicitudes por mostrar>>>>>");
                                                 }
                                                 break;
-                                        }
-                                        if (usuario_en_sesion.solicitudes != null) {
-                                            for (Solicitud aux1 : usuario_en_sesion.solicitudes) {
-                                                if (!(aux1.isAceptada()) && aux1.getDe() != null) {
-                                                    System.out.println(aux1);
-                                                    System.out.println("\n1.-Aceptar solicitud\t2.-Cancelar solicitud\t3.-Continuar viendo");
-                                                    String espera3 = entradaEscaner.nextLine();
-
-                                                    if (espera3.equals("1")) {
-                                                        aux1.setAceptada(true);
-                                                        usuario_en_sesion.aceptarSolicitud(aux1, aux1.getDe());
-                                                    } else if (espera3.equals("2")) {
-                                                        aux1.setAceptada(false);
-                                                    }
-                                                }
-
-                                            }
-                                        } else {
-                                            System.out.println("\n<<<<<<Sin solicitudes por mostrar>>>>>");
                                         }
                                 }
                                 break;
@@ -385,31 +384,32 @@ public class Tester {
     }
 
     public static void LeerArchivo() {
-        do{try ( //Leer del fichero
-                ObjectInputStream writeData = new ObjectInputStream(new FileInputStream(path_fichero))) {
-            Object userfichero = writeData.readObject();
+        do {
+            try ( //Leer del fichero
+                    ObjectInputStream writeData = new ObjectInputStream(new FileInputStream(path_fichero))) {
+                Object userfichero = writeData.readObject();
 
-            while (userfichero != null) {
-                if (userfichero instanceof Usuario) {
-                    Usuarios.add((Usuario) userfichero);
+                while (userfichero != null) {
+                    if (userfichero instanceof Usuario) {
+                        Usuarios.add((Usuario) userfichero);
 
+                    }
+                    userfichero = writeData.readObject();
                 }
-                userfichero = writeData.readObject();
-            }
 
-            writeData.close();
-            break;
-        } catch (EOFException e1) {
-            System.out.println("Leído.....Fin de fichero");
-            break;
-        } catch (Exception e2) {
-            //e2.printStackTrace();
-            Scanner in = new Scanner(System.in);
-            System.out.println(" <<< Es probable que haya cambiado la ruta de la fuente de datos >>> ");
-            System.out.println(" <<< POR FAVOR INTRODUZCA LA NUEVA RUTA >>> ");
-            path_fichero = in.nextLine();
-        } 
-        }while(true);
+                writeData.close();
+                break;
+            } catch (EOFException e1) {
+                System.out.println("Leído.....Fin de fichero");
+                break;
+            } catch (Exception e2) {
+                //e2.printStackTrace();
+                Scanner in = new Scanner(System.in);
+                System.out.println(" <<< Es probable que haya cambiado la ruta de la fuente de datos >>> ");
+                System.out.println(" <<< POR FAVOR INTRODUZCA LA NUEVA RUTA >>> ");
+                path_fichero = in.nextLine();
+            }
+        } while (true);
     }
 
     public static void EscribirArchivo() {
@@ -452,24 +452,25 @@ public class Tester {
             System.out.println("<<  Cerrando... >>");
             readData.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("<<  Hubo un problema guardando la información "
+                    + "modificada en esta sesión. Por favor revise que posea"
+                    + " los permisos adecuados para correr este programa. >>");
         }
 
     }
-    
-    public static int ValidarOpcionMenu()
-    {
-        int a=0;
+
+    public static int ValidarOpcionMenu() {
+        int a = 0;
         Scanner capturar = new Scanner(System.in);
-        do{
-            try{
-                  a=capturar.nextInt();
-                  break;
-            }catch(java.util.InputMismatchException e){
-                  System.out.println("Ingresar solo numeros") ;
-                  capturar.next();
+        do {
+            try {
+                a = capturar.nextInt();
+                break;
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Ingresar solo numeros");
+                capturar.next();
             }
-       }while(true);
+        } while (true);
         return a;
     }
 

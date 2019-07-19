@@ -46,7 +46,7 @@ public class Publicación implements Serializable{
 
     @Override
     public String toString() {
-        return "Publicaci\u00f3n{" + "texto=" + texto + ", reacciones=" + reacciones + ", dueño=" + dueño + '}';
+        return "\n*************************************************\n------Publicación:-------\n"+ texto + "\nReacciones=" + reacciones + "\nPublicada por=" + dueño.nombre + "\n******************************************";
     }
 
     

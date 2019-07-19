@@ -35,6 +35,7 @@ public class Solicitud implements Serializable {
 
     public Solicitud(Usuario de, Usuario para, boolean aceptada, Date fecha_enviada) {
         this.de = de;
+        this.para = para;
         this.aceptada = aceptada;
         this.fecha_enviada = fecha_enviada;
     }
@@ -58,11 +59,16 @@ public class Solicitud implements Serializable {
     @Override
     public String toString() {
         if (para == null) {
-            return "\nSolicitud enviada a: " + para.nombre
-                    + "\nFecha: " + fecha_enviada;
+            return "\n*******************************************************"
+                    + "\nSolicitud de: " + de.nombre
+                    + "\nFecha: " + fecha_enviada+""
+                    + "\n*****************************************************";
+
         } else if (de == null) {
-            return "\nSolicitud de: " + de.nombre
-                    + "\nFecha: " + fecha_enviada;
+            return "\n*******************************************************"
+                    +"\nSolicitud enviada a: " + para.nombre
+                    + "\nFecha: " + fecha_enviada+""
+                    + "\n*****************************************************";
         }
         return null;
     }
