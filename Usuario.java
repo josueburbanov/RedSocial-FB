@@ -49,6 +49,18 @@ public class Usuario implements Serializable{
         
     }
     
+    public void AgregarGrupo(Grupo nuevo)
+    {
+        if(!grupos.contains(nuevo))
+        {
+            grupos.add(nuevo);
+            System.out.println("<<<< Usted se ha unido al grupo >>>>> ");
+        }
+        else
+        {
+            System.out.println("<<<< Usted ya pertenece a este grupo >>>>> ");
+        }
+    }
 
     
     @Override

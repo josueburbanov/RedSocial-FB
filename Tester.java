@@ -23,13 +23,14 @@ public class Tester {
     //Lista que carga todos los usuarios del fichero
     public static ArrayList<Usuario> Usuarios = new ArrayList();
     public static Usuario usuario_en_sesion = new Usuario();
-    public static String path_fichero = "C:\\Users\\josue.burbano\\Documents\\NetBeansProjects\\RedFacebookSocial\\Fichero.dat";
+    public static String path_fichero = "C:\\Users\\316\\Documents\\NetBeansProjects\\RedFacebookSocial\\Fichero.dat";
     public static boolean sesion = false;
 
     /**
      * @param args the command line arguments
+     * @throws java.io.FileNotFoundException
      */
-    public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         // TODO code application logic here
 
         LeerArchivo();
@@ -39,8 +40,9 @@ public class Tester {
 
         while (opcion != 3) {
             System.out.println("\nFACEBOOK\n\n1.-Login \n2.-Registrarse\n3.-Salir\n");
-            String op = entradaEscaner.nextLine();
-            opcion = Integer.parseInt(op);
+            //String op = entradaEscaner.nextLine();
+            //opcion = Integer.parseInt(op);
+            opcion=ValidarOpcionMenu();
             switch (opcion) {
                 case 1:
                     System.out.println("\nLOGIN\nIngrese nombre de usuario:");
@@ -50,8 +52,8 @@ public class Tester {
                     usuario_en_sesion = Login(auxnombre, auxclave);
                     while (sesion == true) {
                         System.out.println("\nUSUARIO EN LINEA: " + usuario_en_sesion.nombre + "\nMENU\n1.-Ver perfil\n2.-Ver publicaciones\n3.-Grupos\n4.-Eventos\n5.-Amigos\n6.-Cerrar sesión");
-                        String opcion2 = entradaEscaner.nextLine();
-                        switch (Integer.parseInt(opcion2)) {
+                        int opcion2 = ValidarOpcionMenu();
+                        switch (opcion2) {
                             case 1:
                                 System.out.println(usuario_en_sesion);
                                 String espera = entradaEscaner.nextLine();
@@ -111,52 +113,83 @@ public class Tester {
                                 break;
 
                             case 3:
-                                System.out.println("\nGRUPOS\n1.-Ver grupos\n2.-Crear grupo");
-                                String opcion4 = entradaEscaner.nextLine();
-                                String espera2 = "99";
-                                switch (Integer.parseInt(opcion4)) {
+                                System.out.println("\nGRUPOS\n1.-Ver mis grupos\n2.-Unirse a grupos\n3.-Crear grupo");
+                                
+                                int opcion4 = ValidarOpcionMenu();
+                                int espera2=9;
+                                switch (opcion4) {
                                     case 1:
                                         for (Grupo aux : usuario_en_sesion.grupos) {
                                             System.out.println(aux);
-                                            System.out.println("\n1.-Unirse\t2.-Publicar\t3.-Continuar viendo");
-                                            espera2 = entradaEscaner.nextLine();
-                                        }
-                                        for (Usuario aux : usuario_en_sesion.amigos) {
-                                            for (Grupo gv : aux.grupos) {
-                                                System.out.println(gv);
-                                                System.out.println("\n1.-Unirse\t2.-Publicar\t3.-Continuar viendo");
-                                                espera2 = entradaEscaner.nextLine();
-
-                                            }
-                                        }
-                                        //Empieza PUBLICAR EN GRUPO
-                                        switch (Integer.parseInt(espera2)) {
+                                            System.out.println("\n1.-Publicar\t2.-Siguiente grupo");
+                                            espera2 = ValidarOpcionMenu();
+                                            //Empieza UNIRSE/PUBLICAR/CONTINUAR EN GRUPO
+                                        switch (espera2) {
                                             case 1:
-
+                                             
+                                                //Publicar
+                                                System.out.println("\nPublicar en el grupo\nEscriba aquí el texto de la publicación: ");
+                                                String txtpubli = entradaEscaner.nextLine();
+                                                aux.AgregarPublicacion(new Publicación(txtpubli,usuario_en_sesion));
+                                               
+                                                
                                                 break;
-
+                                                                                                                                    
                                             default:
 
                                                 break;
                                         }
                                         //Finaliza PUBLICAR EN GRUPO        
-                                        break;
 
+                                        }
+                                        System.out.println("<<<< Fin de grupos >>>>");
+                                        break;
+                                                                            
                                     case 2:
+                                        
+                                        //Unirme a grupos
+                                        for (Usuario aux : usuario_en_sesion.amigos) {
+                                            for (Grupo gv : aux.grupos) {
+                                                System.out.println(gv);
+                                                System.out.println("\n1.-Unirme\t2.-Siguiente grupo");
+                                                espera2 = ValidarOpcionMenu();
+                                                //Empieza UNIRSE/PUBLICAR/CONTINUAR EN GRUPO
+                                        switch (espera2) {
+                                            
+                                            case 1:
+                                            //Unirme
+                                            usuario_en_sesion.AgregarGrupo(gv);
+                                            
+                                                
+                                                break;
+                                            
+                                            case 2:
+                                                
+                                                break;
+                                            default:
+
+                                                break;
+                                                        }
+                                        //Finaliza PUBLICAR EN GRUPO        
+                                            }
+                                        }
+                                            System.out.println("<<<< Fin de grupos >>>>");
+                                        break;
+                                    case 3:
                                         Grupo aux = new Grupo();
                                         System.out.println("Ingrese el titulo:");
                                         aux.nombre = entradaEscaner.nextLine();
                                         System.out.println("Ingrese una descripción:");
                                         aux.descripcion = entradaEscaner.nextLine();
-                                        usuario_en_sesion.grupos.add(aux);
+                                        usuario_en_sesion.AgregarGrupo(aux);
                                         break;
                                 }
                                 break;
 
                             case 4:
                                 System.out.println("\nEVENTOS\n1.-Ver eventos\n2.-Crear evento");
-                                String opcion3 = entradaEscaner.nextLine();
-                                switch (Integer.parseInt(opcion3)) {
+                                int opcion3 = ValidarOpcionMenu();
+                                switch (opcion3) {
                                     case 1:
                                         for (Evento aux1 : usuario_en_sesion.eventos) {
                                             System.out.println(aux1);
@@ -165,7 +198,7 @@ public class Tester {
 
                                             if (espera22.equals("1")) {
                                                 aux1.AddAssit(usuario_en_sesion);
-                                                System.out.println("Confirmado");
+                                                System.out.println("<<<< Confirmado >>>>>");
                                                 System.out.flush();
                                             } else if (espera22.equals("2")) {
                                                 aux1.AddInteres(usuario_en_sesion);
@@ -176,7 +209,7 @@ public class Tester {
                                         for (Usuario aux2 : usuario_en_sesion.amigos) {
                                             for (Evento ev : aux2.eventos) {
                                                 System.out.println(ev);
-                                                System.out.println("\n1.-Asistire\t2.-Me interesa\t3.-Continuar viendo");
+                                                System.out.println("\n1.-Asistire\t2.-Me interesa\t3.-Siguiente evento");
                                                 String espera3 = entradaEscaner.nextLine();
                                                 if (espera3.equals("1")) {
                                                     ev.AddAssit(usuario_en_sesion);
@@ -304,6 +337,7 @@ public class Tester {
 
                             case 6:
                                 sesion = false;
+                                EscribirArchivo();
                                 break;
 
                             default:
@@ -351,7 +385,7 @@ public class Tester {
     }
 
     public static void LeerArchivo() {
-        try ( //Leer del fichero
+        do{try ( //Leer del fichero
                 ObjectInputStream writeData = new ObjectInputStream(new FileInputStream(path_fichero))) {
             Object userfichero = writeData.readObject();
 
@@ -364,11 +398,18 @@ public class Tester {
             }
 
             writeData.close();
+            break;
         } catch (EOFException e1) {
             System.out.println("Leído.....Fin de fichero");
+            break;
         } catch (Exception e2) {
-            e2.printStackTrace();
-        }
+            //e2.printStackTrace();
+            Scanner in = new Scanner(System.in);
+            System.out.println(" <<< Es probable que haya cambiado la ruta de la fuente de datos >>> ");
+            System.out.println(" <<< POR FAVOR INTRODUZCA LA NUEVA RUTA >>> ");
+            path_fichero = in.nextLine();
+        } 
+        }while(true);
     }
 
     public static void EscribirArchivo() {
@@ -408,12 +449,28 @@ public class Tester {
                 //readData.writeObject(user);
                 //readData.writeObject(user2);
             }
-            System.out.println("Guardado");
+            System.out.println("<<  Cerrando... >>");
             readData.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+    
+    public static int ValidarOpcionMenu()
+    {
+        int a=0;
+        Scanner capturar = new Scanner(System.in);
+        do{
+            try{
+                  a=capturar.nextInt();
+                  break;
+            }catch(java.util.InputMismatchException e){
+                  System.out.println("Ingresar solo numeros") ;
+                  capturar.next();
+            }
+       }while(true);
+        return a;
     }
 
 }

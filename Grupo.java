@@ -23,10 +23,23 @@ public class Grupo implements Serializable{
         publicaciones= new ArrayList();
     }
     
+    public void AgregarPublicacion(Publicación nueva)
+    {
+        if(!publicaciones.contains(nueva))
+        {
+            publicaciones.add(nueva);
+            
+        }
+    }
 
     @Override
     public String toString() {
-        return "\nGRUPO" + "\nNombre: " + nombre + "\nDescripcion: " + descripcion ;
+        String publi="";
+        for(Publicación aux : publicaciones)
+        {
+            publi += aux.getDueño().nombre +":\t\t"+ aux.getTexto()+"\n" ;
+        }
+        return "\nGRUPO" + "\nNombre: " + nombre + "\nDescripcion: " + descripcion +"\nPublicaciones:\n" + publi ;
     }
     
     
