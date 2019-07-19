@@ -38,6 +38,11 @@ public class Evento implements Serializable {
         if(!asistiran.contains(assit))
         {
             asistiran.add(assit);
+            System.out.println("<<< Confirmado >>>>");
+        }
+        else
+        {
+            System.out.println("<<< Usted ya asistirá al evento >>>>");
         }
     }
     
@@ -46,6 +51,12 @@ public class Evento implements Serializable {
         if(!interesados.contains(interest))
         {
             interesados.add(interest);
+            System.out.println("<<< Confirmado >>>>");
+        }
+        else
+        {
+            System.out.println("<<< Usted ya se interesó en el evento >>>>");
+       
         }
     }
 

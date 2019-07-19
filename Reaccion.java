@@ -10,11 +10,11 @@ import java.io.Serializable;
 /**
  * 
  */
-public class Reacción implements Serializable{
+public class Reaccion implements Serializable{
     private String nombre;
     private Usuario dueño;
 
-    Reacción(String nombre, Usuario dueño) {
+    Reaccion(String nombre, Usuario dueño) {
         this.nombre = nombre;
         this.dueño = dueño;
     }
@@ -37,7 +37,7 @@ public class Reacción implements Serializable{
 
     @Override
     public String toString() {
-        return "("+nombre + "por: " + dueño+")";
+        return "("+nombre + " por: " + dueño.getNombre()+")";
     }
     
     

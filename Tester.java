@@ -23,7 +23,7 @@ public class Tester {
     //Lista que carga todos los usuarios del fichero
     public static ArrayList<Usuario> Usuarios = new ArrayList();
     public static Usuario usuario_en_sesion = new Usuario();
-    public static String path_fichero = "C:\\Fichero.txt";
+    public static String path_fichero = "C:\\Users\\316\\Documents\\NetBeansProjects\\RedFacebookSocial\\Fichero.txt";
     public static boolean sesion = false;
 
     /**
@@ -50,6 +50,7 @@ public class Tester {
                     System.out.println("Ingrese contraseña:");
                     String auxclave = entradaEscaner.nextLine();
                     usuario_en_sesion = Login(auxnombre, auxclave);
+                    System.out.println("\n\n\n\n\n\n\n\n");
                     while (sesion == true) {
                         System.out.println("\nUSUARIO EN LINEA: " + usuario_en_sesion.getNombre() + "\nMENU\n1.-Ver perfil\n2.-Ver publicaciones\n3.-Grupos\n4.-Eventos\n5.-Amigos\n6.-Cerrar sesión");
                         int opcion2 = ValidarOpcionMenu();
@@ -57,6 +58,7 @@ public class Tester {
                             case 1:
                                 System.out.println(usuario_en_sesion);
                                 String espera = entradaEscaner.nextLine();
+                                System.out.println("\n\n\n\n\n\n\n\n");
                                 break;
 
                             case 2:
@@ -70,7 +72,7 @@ public class Tester {
                                         if (usuario_en_sesion.getPublicaciones() == null) {
                                             usuario_en_sesion.setPublicaciones(new ArrayList<>());
                                         }
-                                        usuario_en_sesion.getPublicaciones().add(new Publicación(textoPublicacion, usuario_en_sesion));
+                                        usuario_en_sesion.getPublicaciones().add(new Publicacion(textoPublicacion, usuario_en_sesion));
 
                                         break;
                                     case "2":
@@ -97,7 +99,7 @@ public class Tester {
                                             if (amigoPublicar.getPublicaciones() == null) {
                                                 amigoPublicar.setPublicaciones(new ArrayList<>());
                                             }
-                                            amigoPublicar.getPublicaciones().add(new Publicación(texto_pub, usuario_en_sesion));
+                                            amigoPublicar.getPublicaciones().add(new Publicacion(texto_pub, usuario_en_sesion));
                                         }
 
                                         break;
@@ -110,7 +112,7 @@ public class Tester {
                                         if (usuario_en_sesion.getPublicaciones().size() == 0) {
                                             System.out.println("\n<<<<<<Sin publicaciones por mostrar>>>>>");
                                         } else {
-                                            for (Publicación iter : usuario_en_sesion.getPublicaciones()) {
+                                            for (Publicacion iter : usuario_en_sesion.getPublicaciones()) {
                                                 System.out.println(iter);
                                                 System.out.println("\n1.Me gusta\t2.Me encanta\t3.Me divierte\t4.Me enoja\t5.Me entristese\tOtra tecla.-Seguir viendo");
                                                 String seleccionPub = entradaEscaner.nextLine();
@@ -118,27 +120,27 @@ public class Tester {
                                                     if (iter.getReacciones() == null) {
                                                         iter.setReacciones(new ArrayList<>());
                                                     }
-                                                    iter.getReacciones().add(new Reacción("Me gusta", usuario_en_sesion));
+                                                    iter.getReacciones().add(new Reaccion("Me gusta", usuario_en_sesion));
                                                 } else if (seleccionPub.equals("2")) {
                                                     if (iter.getReacciones() == null) {
                                                         iter.setReacciones(new ArrayList<>());
                                                     }
-                                                    iter.getReacciones().add(new Reacción("Me encanta", usuario_en_sesion));
+                                                    iter.getReacciones().add(new Reaccion("Me encanta", usuario_en_sesion));
                                                 } else if (seleccionPub.equals("3")) {
                                                     if (iter.getReacciones() == null) {
                                                         iter.setReacciones(new ArrayList<>());
                                                     }
-                                                    iter.getReacciones().add(new Reacción("Me divierte", usuario_en_sesion));
+                                                    iter.getReacciones().add(new Reaccion("Me divierte", usuario_en_sesion));
                                                 } else if (seleccionPub.equals("4")) {
                                                     if (iter.getReacciones() == null) {
                                                         iter.setReacciones(new ArrayList<>());
                                                     }
-                                                    iter.getReacciones().add(new Reacción("Me enoja", usuario_en_sesion));
+                                                    iter.getReacciones().add(new Reaccion("Me enoja", usuario_en_sesion));
                                                 } else if (seleccionPub.equals("5")) {
                                                     if (iter.getReacciones() == null) {
                                                         iter.setReacciones(new ArrayList<>());
                                                     }
-                                                    iter.getReacciones().add(new Reacción("Me entristece", usuario_en_sesion));
+                                                    iter.getReacciones().add(new Reaccion("Me entristece", usuario_en_sesion));
                                                 }
                                             }
 
@@ -152,7 +154,7 @@ public class Tester {
                                                 if (amigo.getPublicaciones().size() == 0) {
                                                     System.out.println("\n<<<<<<Sin publicaciones por mostrar>>>>>\n");
                                                 } else {
-                                                    for (Publicación iter : amigo.getPublicaciones()) {
+                                                    for (Publicacion iter : amigo.getPublicaciones()) {
                                                         System.out.println(iter);
                                                         System.out.println("\n1.Me gusta\t2.Me encanta\t3.Me divierte\t4.Me enoja\t5.Me entristese\tOtra tecla.-Seguir viendo");
                                                         String seleccionPub = entradaEscaner.nextLine();
@@ -160,36 +162,40 @@ public class Tester {
                                                             if (iter.getReacciones() == null) {
                                                                 iter.setReacciones(new ArrayList<>());
                                                             }
-                                                            iter.getReacciones().add(new Reacción("Me gusta", usuario_en_sesion));
+                                                            iter.getReacciones().add(new Reaccion("Me gusta", usuario_en_sesion));
                                                         } else if (seleccionPub.equals("2")) {
                                                             if (iter.getReacciones() == null) {
                                                                 iter.setReacciones(new ArrayList<>());
                                                             }
-                                                            iter.getReacciones().add(new Reacción("Me encanta", usuario_en_sesion));
+                                                            iter.getReacciones().add(new Reaccion("Me encanta", usuario_en_sesion));
                                                         } else if (seleccionPub.equals("3")) {
                                                             if (iter.getReacciones() == null) {
                                                                 iter.setReacciones(new ArrayList<>());
                                                             }
-                                                            iter.getReacciones().add(new Reacción("Me divierte", usuario_en_sesion));
+                                                            iter.getReacciones().add(new Reaccion("Me divierte", usuario_en_sesion));
                                                         } else if (seleccionPub.equals("4")) {
                                                             if (iter.getReacciones() == null) {
                                                                 iter.setReacciones(new ArrayList<>());
                                                             }
-                                                            iter.getReacciones().add(new Reacción("Me enoja", usuario_en_sesion));
+                                                            iter.getReacciones().add(new Reaccion("Me enoja", usuario_en_sesion));
                                                         } else if (seleccionPub.equals("5")) {
                                                             if (iter.getReacciones() == null) {
                                                                 iter.setReacciones(new ArrayList<>());
                                                             }
-                                                            iter.getReacciones().add(new Reacción("Me entristece", usuario_en_sesion));
+                                                            iter.getReacciones().add(new Reaccion("Me entristece", usuario_en_sesion));
                                                         }
                                                     }
                                                 }
                                             }
                                             break;
                                         }
+                                        
+                                        break;
+                                        default:
+                                            
                                         break;
                                 }
-
+                                     //GRUPOS
                                     case 3:
                                         System.out.println("\nGRUPOS\n1.-Ver mis grupos\n2.-Unirse a grupos\n3.-Crear grupo\nOtra tecla.-Volver al menú");
 
@@ -208,7 +214,7 @@ public class Tester {
                                                             //Publicar
                                                             System.out.println("\nPublicar en el grupo\nEscriba aquí el texto de la publicación: ");
                                                             String txtpubli = entradaEscaner.nextLine();
-                                                            aux.AgregarPublicacion(new Publicación(txtpubli, usuario_en_sesion));
+                                                            aux.AgregarPublicacion(new Publicacion(txtpubli, usuario_en_sesion));
 
                                                             break;
 
@@ -474,7 +480,7 @@ public class Tester {
         return retorno;
     }
 
-    public static void LeerArchivo() {
+    public static void LeerArchivo() throws IOException, ClassNotFoundException {
         do {
             try ( //Leer del fichero
                     ObjectInputStream writeData = new ObjectInputStream(new FileInputStream(path_fichero))) {
@@ -493,12 +499,14 @@ public class Tester {
             } catch (EOFException e1) {
                 System.out.println("Leído.....Fin de fichero");
                 break;
-            } catch (Exception e2) {
+            }
+            catch (FileNotFoundException e2) {
                 //e2.printStackTrace();
                 Scanner in = new Scanner(System.in);
                 System.out.println(" <<< Es probable que haya cambiado la ruta de la fuente de datos >>> ");
                 System.out.println(" <<< POR FAVOR INTRODUZCA LA NUEVA RUTA >>> ");
                 path_fichero = in.nextLine();
+                //in.next();
             }
         } while (true);
     }
@@ -531,7 +539,7 @@ public class Tester {
         user2.setFecha_nacimiento("9 de septiembre de 1999");
         user2.setInfo_adicional("Me gusta la música gitana");
         //System.out.println(user2);
-        user2.getAmigos().add(user);
+        //user2.getAmigos().add(user);
 
         try ( //Escribir en el fichero
                 ObjectOutputStream readData = new ObjectOutputStream(new FileOutputStream(path_fichero))) {
@@ -546,6 +554,7 @@ public class Tester {
             System.out.println("<<  Hubo un problema guardando la información "
                     + "modificada en esta sesión. Por favor revise que posea"
                     + " los permisos adecuados para correr este programa. >>");
+                    
         }
 
     }

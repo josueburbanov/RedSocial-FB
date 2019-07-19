@@ -25,7 +25,7 @@ public class Usuario implements Serializable{
     private ArrayList<Usuario>amigos;
     private ArrayList<Evento>eventos;
     private ArrayList<Solicitud>solicitudes;
-    private ArrayList<Publicación>publicaciones;
+    private ArrayList<Publicacion>publicaciones;
 
     
     
@@ -183,11 +183,11 @@ public class Usuario implements Serializable{
         this.solicitudes = solicitudes;
     }
 
-    public ArrayList<Publicación> getPublicaciones() {
+    public ArrayList<Publicacion> getPublicaciones() {
         return publicaciones;
     }
 
-    public void setPublicaciones(ArrayList<Publicación> publicaciones) {
+    public void setPublicaciones(ArrayList<Publicacion> publicaciones) {
         this.publicaciones = publicaciones;
     }
 

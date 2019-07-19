@@ -11,12 +11,12 @@ import java.util.ArrayList;
 /**
  * 
  */
-public class Publicación implements Serializable{
+public class Publicacion implements Serializable{
     private String texto;
-    private ArrayList<Reacción> reacciones = new ArrayList<>();    
+    private ArrayList<Reaccion> reacciones = new ArrayList<>();    
     private Usuario dueño;
 
-    public Publicación(String texto, Usuario dueño) {
+    public Publicacion(String texto, Usuario dueño) {
         this.texto = texto;
         this.dueño = dueño;
     }
@@ -36,11 +36,11 @@ public class Publicación implements Serializable{
         this.texto = texto;
     }
 
-    public ArrayList<Reacción> getReacciones() {
+    public ArrayList<Reaccion> getReacciones() {
         return reacciones;
     }
 
-    public void setReacciones(ArrayList<Reacción> reacciones) {
+    public void setReacciones(ArrayList<Reaccion> reacciones) {
         this.reacciones = reacciones;
     }
 

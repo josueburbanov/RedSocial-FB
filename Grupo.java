@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Grupo implements Serializable{
     private String nombre;
     private String descripcion;
-    private ArrayList<Publicación> publicaciones;
+    private ArrayList<Publicacion> publicaciones;
 
     
     
@@ -26,7 +26,7 @@ public class Grupo implements Serializable{
         publicaciones= new ArrayList();
     }
     
-    public void AgregarPublicacion(Publicación nueva)
+    public void AgregarPublicacion(Publicacion nueva)
     {
         if(!publicaciones.contains(nueva))
         {
@@ -38,7 +38,7 @@ public class Grupo implements Serializable{
     @Override
     public String toString() {
         String publi="";
-        for(Publicación aux : publicaciones)
+        for(Publicacion aux : publicaciones)
         {
             publi += aux.getDueño().getNombre() +":\t\t"+ aux.getTexto()+"\n" ;
         }
@@ -61,11 +61,11 @@ public class Grupo implements Serializable{
         this.descripcion = descripcion;
     }
 
-    public ArrayList<Publicación> getPublicaciones() {
+    public ArrayList<Publicacion> getPublicaciones() {
         return publicaciones;
     }
 
-    public void setPublicaciones(ArrayList<Publicación> publicaciones) {
+    public void setPublicaciones(ArrayList<Publicacion> publicaciones) {
         this.publicaciones = publicaciones;
     }
     
