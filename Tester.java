@@ -428,8 +428,20 @@ public class Tester {
                     String nom = entradaEscaner.nextLine();
                     System.out.println("Ingresar su clave:");
                     String clav = entradaEscaner.nextLine();
+                    System.out.println("Correo:");
+                    String correo = entradaEscaner.nextLine();
+                    System.out.println("Genero:");
+                    String genero = entradaEscaner.nextLine();
+                    System.out.println("Fecha Nacimiento:");
+                    String fechaNacimiento = entradaEscaner.nextLine();                    
+                    System.out.println("Info adicional:");
+                    String infoAd = entradaEscaner.nextLine();                    
                     nuevo.setNombre(nom);
                     nuevo.setClave(clav);
+                    nuevo.setCorreo(correo);
+                    nuevo.setGenero(genero);
+                    nuevo.setFecha_nacimiento(fechaNacimiento);
+                    nuevo.setInfo_adicional(infoAd);
                     Usuarios.add(nuevo);
                     break;
                 case 3:
