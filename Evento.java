@@ -12,13 +12,16 @@ import java.util.ArrayList;
  *
  */
 public class Evento implements Serializable {
-    public String titulo;
-    public String hora;
-    public String fecha;
-    public String lugar;
-    public String descripcion;
-    public ArrayList<Usuario>interesados;
-    public ArrayList<Usuario>asistiran;
+    private String titulo;
+    private String hora;
+    private String fecha;
+    private String lugar;
+    private String descripcion;
+    private ArrayList<Usuario>interesados;
+    private ArrayList<Usuario>asistiran;
+
+    
+    
 
     public Evento() {
       titulo="";
@@ -52,13 +55,69 @@ public class Evento implements Serializable {
         String interest="";
         for(Usuario aux: asistiran)
         {
-           asistira=asistira+"\t"+aux.nombre+" ,"; 
+           asistira=asistira+"\t"+aux.getNombre()+" ,"; 
         }
         for(Usuario aux: interesados)
         {
-           interest=interest+"\t"+aux.nombre; 
+           interest=interest+"\t"+aux.getNombre(); 
         }
         return "\nEVENTO" + "\nTitulo: " + titulo + "\nHora: " + hora + "\nFecha: " + fecha + "\nLugar: " + lugar + "\nDescripcion: " + descripcion +"\n\nAsistiran: "+asistira+"\nInteresados: "+interest;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public ArrayList<Usuario> getInteresados() {
+        return interesados;
+    }
+
+    public void setInteresados(ArrayList<Usuario> interesados) {
+        this.interesados = interesados;
+    }
+
+    public ArrayList<Usuario> getAsistiran() {
+        return asistiran;
+    }
+
+    public void setAsistiran(ArrayList<Usuario> asistiran) {
+        this.asistiran = asistiran;
     }
     
     

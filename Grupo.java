@@ -12,9 +12,12 @@ import java.util.ArrayList;
  * 
  */
 public class Grupo implements Serializable{
-    public String nombre;
-    public String descripcion;
-    public ArrayList<Publicación> publicaciones;
+    private String nombre;
+    private String descripcion;
+    private ArrayList<Publicación> publicaciones;
+
+    
+    
     
     public Grupo()
     {
@@ -37,9 +40,33 @@ public class Grupo implements Serializable{
         String publi="";
         for(Publicación aux : publicaciones)
         {
-            publi += aux.getDueño().nombre +":\t\t"+ aux.getTexto()+"\n" ;
+            publi += aux.getDueño().getNombre() +":\t\t"+ aux.getTexto()+"\n" ;
         }
         return "\nGRUPO" + "\nNombre: " + nombre + "\nDescripcion: " + descripcion +"\nPublicaciones:\n" + publi ;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public ArrayList<Publicación> getPublicaciones() {
+        return publicaciones;
+    }
+
+    public void setPublicaciones(ArrayList<Publicación> publicaciones) {
+        this.publicaciones = publicaciones;
     }
     
     

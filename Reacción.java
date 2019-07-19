@@ -11,5 +11,34 @@ import java.io.Serializable;
  * 
  */
 public class Reacción implements Serializable{
+    private String nombre;
+    private Usuario dueño;
+
+    Reacción(String nombre, Usuario dueño) {
+        this.nombre = nombre;
+        this.dueño = dueño;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Usuario getDueño() {
+        return dueño;
+    }
+
+    public void setDueño(Usuario dueño) {
+        this.dueño = dueño;
+    }
+
+    @Override
+    public String toString() {
+        return "("+nombre + "por: " + dueño+")";
+    }
+    
     
 }

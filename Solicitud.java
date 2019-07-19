@@ -60,13 +60,13 @@ public class Solicitud implements Serializable {
     public String toString() {
         if (para == null) {
             return "\n*******************************************************"
-                    + "\nSolicitud de: " + de.nombre
+                    + "\nSolicitud de: " + de.getNombre()
                     + "\nFecha: " + fecha_enviada+""
                     + "\n*****************************************************";
 
         } else if (de == null) {
             return "\n*******************************************************"
-                    +"\nSolicitud enviada a: " + para.nombre
+                    +"\nSolicitud enviada a: " + para.getNombre()
                     + "\nFecha: " + fecha_enviada+""
                     + "\n*****************************************************";
         }
