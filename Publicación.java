@@ -13,7 +13,15 @@ import java.util.ArrayList;
  */
 public class Publicación implements Serializable{
     private String texto;
-    private ArrayList<Reacción> reacciones;    
+    private ArrayList<Reacción> reacciones = new ArrayList<>();    
+    private Usuario dueño;
+
+    public Publicación(String texto, Usuario dueño) {
+        this.texto = texto;
+        this.dueño = dueño;
+    }
+    
+    
 
     public String getTexto() {
         return texto;
@@ -31,6 +39,13 @@ public class Publicación implements Serializable{
         this.reacciones = reacciones;
     }
 
+    @Override
+    public String toString() {
+        return "Publicaci\u00f3n{" + "texto=" + texto + ", reacciones=" + reacciones + ", dueño=" + dueño + '}';
+    }
+
+    
+    
     
     
     

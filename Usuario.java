@@ -24,6 +24,7 @@ public class Usuario implements Serializable{
     public ArrayList<Usuario>amigos;
     public ArrayList<Evento>eventos;
     public ArrayList<Solicitud>solicitudes;
+    public ArrayList<Publicación>publicaciones;
     
     
     public Usuario(){
@@ -36,13 +37,16 @@ public class Usuario implements Serializable{
     amigos = new ArrayList();
     eventos = new ArrayList();
     solicitudes = new ArrayList();
+    publicaciones = new ArrayList<>();
      }
 
-    public void aceptarSolicitud(Solicitud solicitud){
+    public void aceptarSolicitud(Solicitud solicitud, Usuario amigo){
         if(solicitud.isAceptada()){
             amigos.add(solicitud.getDe());   
             solicitudes.remove(solicitud);
+            amigo.amigos.add(this);
         }
+        
     }
     
 

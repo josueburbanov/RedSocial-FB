@@ -23,7 +23,7 @@ public class Tester {
     //Lista que carga todos los usuarios del fichero
     public static ArrayList<Usuario> Usuarios = new ArrayList();
     public static Usuario usuario_en_sesion = new Usuario();
-    public static String path_fichero = "C:\\Users\\316\\Documents\\NetBeansProjects\\RedFacebookSocial\\Fichero.dat";
+    public static String path_fichero = "C:\\Users\\josue.burbano\\Documents\\NetBeansProjects\\RedFacebookSocial\\Fichero.dat";
     public static boolean sesion = false;
 
     /**
@@ -49,7 +49,7 @@ public class Tester {
                     String auxclave = entradaEscaner.nextLine();
                     usuario_en_sesion = Login(auxnombre, auxclave);
                     while (sesion == true) {
-                        System.out.println("USUARIO EN LINEA: "+usuario_en_sesion.nombre+"\nMENU\n1.-Ver perfil\n2.-Ver publicaciones\n3.-Grupos\n4.-Eventos\n5.-Amigos\n6.-Cerrar sesión");
+                        System.out.println("\nUSUARIO EN LINEA: " + usuario_en_sesion.nombre + "\nMENU\n1.-Ver perfil\n2.-Ver publicaciones\n3.-Grupos\n4.-Eventos\n5.-Amigos\n6.-Cerrar sesión");
                         String opcion2 = entradaEscaner.nextLine();
                         switch (Integer.parseInt(opcion2)) {
                             case 1:
@@ -59,12 +59,61 @@ public class Tester {
 
                             case 2:
                                 //PUBLICACIONES
+                                System.out.println("\nPUBLICACIONES\n1.-Publicar en mi muro\n2.-Publicar en el muro de un amigo\n3.- Ver publicaciones");
+                                String opcionPublicar = entradaEscaner.nextLine();
+                                switch (opcionPublicar) {
+                                    case "1":
+                                        System.out.println("\nPublicar en mi muro\nEscriba aquí el texto de la publicación: ");
+                                        String textoPublicacion = entradaEscaner.nextLine();
+                                        if (usuario_en_sesion.publicaciones == null) {
+                                            usuario_en_sesion.publicaciones = new ArrayList<>();
+                                        }
+                                        usuario_en_sesion.publicaciones.add(new Publicación(textoPublicacion, usuario_en_sesion));
+
+                                        break;
+                                    case "2":
+                                        System.out.println("\nPublicar en el muro de un amigo\n1.Seleccionar amigo");
+
+                                        String seleccionAmigo = "";
+                                        String texto_pub = "";
+                                        Usuario amigoPublicar = null;
+                                        for (Usuario amigo : usuario_en_sesion.amigos) {
+                                            seleccionAmigo = entradaEscaner.nextLine();
+                                            if (seleccionAmigo.equals("1")) {
+                                                amigoPublicar = amigo;
+                                                System.out.println("\nEscriba texto de publicación: ");
+                                                texto_pub = entradaEscaner.nextLine();
+                                                break;
+                                            }
+                                        }
+
+                                        if (amigoPublicar != null) {
+                                            if (amigoPublicar.publicaciones == null) {
+                                                amigoPublicar.publicaciones = new ArrayList<>();
+                                            }
+                                            amigoPublicar.publicaciones.add(new Publicación(texto_pub, usuario_en_sesion));
+                                        }
+
+                                        break;
+                                    case "3":
+                                        System.out.println("\nMis publicaciones:  \n");
+                                        if (usuario_en_sesion.publicaciones == null) {
+                                            usuario_en_sesion.publicaciones = new ArrayList<>();
+                                        }
+                                        for (Publicación iter: usuario_en_sesion.publicaciones) {
+                                            System.out.println(iter);
+                                            
+                                        }
+
+                                        break;
+                                }
+
                                 break;
 
                             case 3:
                                 System.out.println("\nGRUPOS\n1.-Ver grupos\n2.-Crear grupo");
                                 String opcion4 = entradaEscaner.nextLine();
-                                String espera2 ="99";
+                                String espera2 = "99";
                                 switch (Integer.parseInt(opcion4)) {
                                     case 1:
                                         for (Grupo aux : usuario_en_sesion.grupos) {
@@ -81,15 +130,14 @@ public class Tester {
                                             }
                                         }
                                         //Empieza PUBLICAR EN GRUPO
-                                        switch(Integer.parseInt(espera2))
-                                        {
+                                        switch (Integer.parseInt(espera2)) {
                                             case 1:
-                                                
+
                                                 break;
-                                            
+
                                             default:
-                                                
-                                            break;
+
+                                                break;
                                         }
                                         //Finaliza PUBLICAR EN GRUPO        
                                         break;
@@ -114,31 +162,27 @@ public class Tester {
                                             System.out.println(aux1);
                                             System.out.println("\n1.-Asistire\t2.-Me interesa\t3.-Continuar viendo");
                                             String espera22 = entradaEscaner.nextLine();
-                                            
-                                            if(espera22.equals("1"))
-                                            {
+
+                                            if (espera22.equals("1")) {
                                                 aux1.AddAssit(usuario_en_sesion);
                                                 System.out.println("Confirmado");
                                                 System.out.flush();
-                                            }
-                                            else if(espera22.equals("2"))
-                                            {
+                                            } else if (espera22.equals("2")) {
                                                 aux1.AddInteres(usuario_en_sesion);
                                             }
-                                        
-                                        }       
-                                        
-                                        for(Usuario aux2 : usuario_en_sesion.amigos )
-                                        {
-                                            for(Evento ev : aux2.eventos)
-                                            {
+
+                                        }
+
+                                        for (Usuario aux2 : usuario_en_sesion.amigos) {
+                                            for (Evento ev : aux2.eventos) {
                                                 System.out.println(ev);
                                                 System.out.println("\n1.-Asistire\t2.-Me interesa\t3.-Continuar viendo");
                                                 String espera3 = entradaEscaner.nextLine();
-                                                if(espera3.equals("1"))
+                                                if (espera3.equals("1")) {
                                                     ev.AddAssit(usuario_en_sesion);
-                                                else if(espera3.equals("2"))
+                                                } else if (espera3.equals("2")) {
                                                     ev.AddInteres(usuario_en_sesion);
+                                                }
                                             }
                                         }
 
@@ -182,19 +226,19 @@ public class Tester {
                                         System.out.println("\nAGREGAR AMIGOS\n(Enter para ver siguiente sugerencia)\n1.-Enviar solicitud\n2.-Regresar");
                                         opcionAmigos = "";
                                         int i = 0;
-                                        if(Usuarios.size()!=1){
-                                        while (opcionAmigos.equals("")) {
-                                            if (!Usuarios.get(i).equals(usuario_en_sesion)) {
-                                                System.out.println("\n" + Usuarios.get(i));
-                                                opcionAmigos = entradaEscaner.nextLine();
+                                        if (Usuarios.size() != 1) {
+                                            while (opcionAmigos.equals("")) {
+                                                if (!Usuarios.get(i).equals(usuario_en_sesion)) {
+                                                    System.out.println("\n" + Usuarios.get(i));
+                                                    opcionAmigos = entradaEscaner.nextLine();
+                                                }
+                                                if (i == Usuarios.size()) {
+                                                    System.out.println("\n<<<<<<Fin lista de amigos>>>>>");
+                                                    opcionAmigos = "2";
+                                                }
+                                                i++;
                                             }
-                                            if (i == Usuarios.size()) {
-                                                System.out.println("\n<<<<<<Fin lista de amigos>>>>>");
-                                                opcionAmigos = "2";
-                                            }
-                                            i++;
                                         }
-                                }
                                         i--;
                                         if (opcionAmigos.equals("1")) {
                                             if (Usuarios.get(i).solicitudes == null) {
@@ -204,7 +248,7 @@ public class Tester {
                                                 usuario_en_sesion.solicitudes = new ArrayList<>();
                                             }
                                             Usuarios.get(i).solicitudes.add(new Solicitud(usuario_en_sesion, null, false, new Date()));
-                                            usuario_en_sesion.solicitudes.add(new Solicitud(null, usuario_en_sesion, false, new Date()));
+                                            usuario_en_sesion.solicitudes.add(new Solicitud(null, Usuarios.get(i), false, new Date()));
                                             System.out.println("\nSolicitud de amistad enviada a " + Usuarios.get(i).nombre);
                                         }
                                         break;
@@ -245,7 +289,7 @@ public class Tester {
 
                                                     if (espera3.equals("1")) {
                                                         aux1.setAceptada(true);
-                                                        usuario_en_sesion.aceptarSolicitud(aux1);
+                                                        usuario_en_sesion.aceptarSolicitud(aux1, aux1.getDe());
                                                     } else if (espera3.equals("2")) {
                                                         aux1.setAceptada(false);
                                                     }
