@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.regex.Matcher;
         
 /*
  * To change this license header, chreadDatae License Headers in Project Properties.
@@ -63,9 +64,10 @@ public class Tester {
                     String auxclave = entradaEscaner.nextLine();
                     
                     usuario_en_sesion = Login(auxnombre, auxclave);
-                    System.out.println("\n\n\n\n\n\n\n\n");
+                    System.out.println("\n");
                     while (sesion == true) {
                         System.out.println("\nUSUARIO EN LINEA: " + usuario_en_sesion.getNombre() + "\nMENU\n1.-Ver perfil\n2.-Ver publicaciones\n3.-Grupos\n4.-Eventos\n5.-Amigos\n6.-Cerrar sesión");
+                        estado=true;
                         int opcion2 = ValidarOpcionMenu();
                         switch (opcion2) {
                             case 1:
@@ -131,6 +133,9 @@ public class Tester {
                                             }
                                         }
                                             System.out.println("\nPUBLICACIONES DE MIS AMIGOS\n");
+                                            if(usuario_en_sesion.getAmigos().isEmpty())
+                                                System.out.println("\n<<<<<< No tiene ningun amigo agregado >>>>>\n");
+                                            
                                             for (Usuario amigo : usuario_en_sesion.getAmigos()) {
                                                 System.out.println("\nPublicacion de: "+amigo.getNombre()+"\n");
                                                 
@@ -144,6 +149,7 @@ public class Tester {
                                                         String seleccionPub = entradaEscaner.nextLine();
                                                         iter.Reaccionar(seleccionPub, amigo);
                                                     }
+                                                    System.out.println("\n<<<<<<Fin publicaciones amigos >>>>>\n");
                                                 }
                                             }
                                             
@@ -385,10 +391,13 @@ public class Tester {
                     //Aqui va el registro de un nuevo usuario COMPLETAR
                     Usuario nuevo = new Usuario();
                     System.out.println("Ingresar su nombre:");
-                    String nom = entradaEscaner.nextLine();
+                    
+                    String nom = ValidarNombreUsuario();
                     System.out.println("Ingresar su clave:");
-                    String clav = entradaEscaner.nextLine();
+                    
+                    String clav = ValidarClave();
                     System.out.println("Correo:");
+                    
                     String correo = ValidarCorreo();
                     System.out.println("Genero:");
                     String genero = ValidarGenero();
@@ -403,24 +412,9 @@ public class Tester {
                     nuevo.setFecha_nacimiento(fechaNacimiento);
                     nuevo.setInfo_adicional(infoAd);
                     
-                    if(Usuarios.isEmpty())
-                        Usuarios.add(nuevo);
-                    try{
-                    for(Usuario aux:Usuarios)
-                    {
-                        if(aux.getClave().equals(nuevo.getClave()))
-                        {
-                            System.out.println("<< No se ha registrado Usuario >>"+ 
-                                    " << Cambie de contraseña >>");
-                            break;
-                        }
-                        else
-                        {
-                            Usuarios.add(nuevo);
-                            System.out.println("<< REGISTRADO >>");
-                        }
-                    }
-                    }catch(Exception e){}
+                    try{Usuarios.add(nuevo);
+                    EscribirArchivo();}catch(Exception e){}
+                    
                     break;
                 case 3:
                     break;
@@ -443,11 +437,16 @@ public class Tester {
                 retorno = aux;
                 System.out.println("Login correcto");
                 sesion = true;
+                
                 break;
             } else {
-                System.out.println("Usuario no encontrado");
+                
                 sesion = false;
             }
+            
+        }
+        if(sesion==false){
+        System.out.println("\n\n\n<<< Usuario no encontrado >>>>\n<<< Clave o nombre de usuario incorrecto >>>>");
         }
         return retorno;
     }
@@ -491,17 +490,17 @@ public class Tester {
                     System.out.println("---- Escriba la ruta ---");
                     path_fichero = in.nextLine();
                     File nuevo = new File(path_fichero);
-                    try{nuevo.createNewFile();}
+                    try{nuevo.createNewFile();
+                        NuevaFuenteDatos();
+                    }
                     catch(Exception e){ System.out.println("--- No existe la ruta ---");}
                 }
                 //in.next();
             }
         } while (true);
     }
-
-    public static void EscribirArchivo() {
-
-        
+    public static void NuevaFuenteDatos()
+    {
         Usuario user = new Usuario();
         user.setNombre("Jimmy");
         user.setClave("12345");
@@ -532,7 +531,14 @@ public class Tester {
           SI NECESITA USARLOS SOLO MODIFIQUE: COMENTE EL LAZO FOR Y DESCOMENTE readData.writeObject(user); 
           EJECUTE UNA VEZ LA APLICACION SALGA NORMALMENTE Y DEJAR COMO AL INICIO
         */
+        Usuarios.add(user);
+        Usuarios.add(user2);
+        //EscribirArchivo();
+    }
+    public static void EscribirArchivo() {
 
+        
+        
         try ( //Escribir en el fichero
                 ObjectOutputStream readData = new ObjectOutputStream(new FileOutputStream(path_fichero))) {
             for (Usuario aux : Usuarios) {
@@ -569,14 +575,27 @@ public class Tester {
     private static String ValidarFecha() {
         int i=0;
         String regexp = "\\d{1,2}/\\d{1,2}/\\d{4}";
+        
+        Pattern patron = Pattern.compile("(\\d+)\\/(\\d+)/(\\d+)");
+        
+        
+        
         String fecha="";
         Scanner capturar = new Scanner(System.in);
         while(i==0){
                fecha=capturar.nextLine();
+               
+
             if(Pattern.matches(regexp, fecha))
             {
-                i=1;
-                
+                Matcher matcher = patron.matcher(fecha);
+               matcher.find();
+               int año= Integer.parseInt(matcher.group(3));
+               if(año>1900&&año<2020) {
+               i=1;}
+                else{
+                System.out.println("Formato: yyyy [1900 - 2019]");
+                }
             }
             else{
                 System.out.println("Formato: dd/mm/yyyy");
@@ -647,6 +666,71 @@ public class Tester {
         }
         //capturar.close();
         return gen; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static String ValidarNombreUsuario() {
+       
+        String nom="";
+        try{
+            int i=0;        
+            Scanner aux1 = new Scanner(System.in);
+            int k=0;
+            while(i==0){
+                k=0;
+            nom=aux1.nextLine();
+            
+                        for(Usuario aux:Usuarios)
+                    {
+                        if(aux.getNombre().equals(nom))
+                        {
+                            k++;
+                        }
+                        
+                    }
+                        if(k==0)
+                        i=1;
+                        else
+                        System.out.println("<< Ya existe usuario con ese nombre >>"+ 
+                                    " << Cambie de nombre >>");
+            }
+                        
+                      
+            }catch(Exception e){}
+        
+        
+        return nom;
+    }
+
+    private static String ValidarClave() {
+          String cla="";
+        try{
+            int i=0;        
+            Scanner aux1 = new Scanner(System.in);
+            int k=0;
+            while(i==0){
+                k=0;
+            cla=aux1.nextLine();
+            
+                        for(Usuario aux:Usuarios)
+                    {
+                        if(aux.getClave().equals(cla))
+                        {
+                            k++;
+                        }
+                        
+                    }
+                        if(k==0)
+                        i=1;
+                        else
+                        System.out.println("<< Ya existe usuario con esa clave >>"+ 
+                                    " << Cambie de clave >>");
+            }
+                        
+                      
+            }catch(Exception e){}
+        
+        
+        return cla;
     }
     
     
