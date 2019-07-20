@@ -1,6 +1,7 @@
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /*
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
  */
 public class Usuario implements Serializable{
     private static final long serialVersionUID = 2653714788738911068L;
+    
     
     private String nombre;
     private String correo;
@@ -42,6 +44,7 @@ public class Usuario implements Serializable{
     eventos = new ArrayList();
     solicitudes = new ArrayList();
     publicaciones = new ArrayList<>();
+    
      }
 
     public void aceptarSolicitud(Solicitud solicitud, Usuario amigo){
@@ -108,6 +111,7 @@ public class Usuario implements Serializable{
     }
 
     public void setNombre(String nombre) {
+        
         this.nombre = nombre;
     }
 
@@ -190,7 +194,18 @@ public class Usuario implements Serializable{
     public void setPublicaciones(ArrayList<Publicacion> publicaciones) {
         this.publicaciones = publicaciones;
     }
-
+    
+    public int ValidarFecha(String fecha)
+    {
+        int i=0;
+        String regexp = "\\d{1,2}/\\d{1,2}/\\d{4}";
+        if(Pattern.matches(regexp, "11/12/2014"))
+        {
+            this.fecha_nacimiento=fecha;
+            i=1;
+        }
+        return i;
+    }
 }
 
 

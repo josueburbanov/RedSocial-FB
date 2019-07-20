@@ -1,4 +1,5 @@
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -19,9 +20,29 @@ public class Publicacion implements Serializable{
     public Publicacion(String texto, Usuario dueño) {
         this.texto = texto;
         this.dueño = dueño;
+        this.reacciones=new ArrayList();
     }
     
+    public void Reaccionar(String op, Usuario reacciono)
+    {
+        if (op.equals("1")) {
+                                                    
+         reacciones.add(new Reaccion("Me gusta", reacciono));
+         } else if (op.equals("2")) {
+                                                    
+         reacciones.add(new Reaccion("Me encanta", reacciono));
+         } else if (op.equals("3")) {
+                                                    
+         reacciones.add(new Reaccion("Me divierte", reacciono));
+         } else if (op.equals("4")) {
+                                                    
+         reacciones.add(new Reaccion("Me enoja", reacciono));
+         } else if (op.equals("5")) {
+                                                    
+         reacciones.add(new Reaccion("Me entristece", reacciono));
+         }
     
+    }
 
     public String getTexto() {
         return texto;

@@ -1,4 +1,5 @@
 
+import java.io.Console;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,7 +10,11 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-
+import java.util.regex.Pattern;
+import java.io.File;
+import java.io.InputStream;
+import java.util.Properties;
+        
 /*
  * To change this license header, chreadDatae License Headers in Project Properties.
  * To change this template file, chreadDatae Tools | Templates
@@ -20,6 +25,9 @@ import java.util.Scanner;
  */
 public class Tester {
 
+    
+
+    
     //Lista que carga todos los usuarios del fichero
     public static ArrayList<Usuario> Usuarios = new ArrayList();
     public static Usuario usuario_en_sesion = new Usuario();
@@ -37,7 +45,7 @@ public class Tester {
         Scanner entradaEscaner = new Scanner(System.in);
 
         int opcion = 0;
-
+        boolean estado=true;
         while (opcion != 3) {
             System.out.println("\nFACEBOOK\n\n1.-Login \n2.-Registrarse\n3.-Salir\n");
             //String op = entradaEscaner.nextLine();
@@ -48,7 +56,12 @@ public class Tester {
                     System.out.println("\nLOGIN\nIngrese nombre de usuario:");
                     String auxnombre = entradaEscaner.nextLine();
                     System.out.println("Ingrese contraseña:");
+                    
+                    //TextDevices.defaultTextDevice();
+                    
+                    
                     String auxclave = entradaEscaner.nextLine();
+                    
                     usuario_en_sesion = Login(auxnombre, auxclave);
                     System.out.println("\n\n\n\n\n\n\n\n");
                     while (sesion == true) {
@@ -61,31 +74,31 @@ public class Tester {
                                 System.out.println("\n\n\n\n\n\n\n\n");
                                 break;
 
+                            
                             case 2:
+                                while(estado==true){
                                 //PUBLICACIONES
-                                System.out.println("\nPUBLICACIONES\n1.-Publicar en mi muro\n2.-Publicar en el muro de un amigo\n3.- Ver publicaciones");
-                                String opcionPublicar = entradaEscaner.nextLine();
+                                System.out.println("\nPUBLICACIONES\n1.-Publicar en mi muro\n2.-Publicar en el muro de un amigo\n3.- Ver publicaciones\n4.-Volver al menu");
+                                int opcionPublicar = ValidarOpcionMenu();
                                 switch (opcionPublicar) {
-                                    case "1":
+                                    case 1:
                                         System.out.println("\nPublicar en mi muro\nEscriba aquí el texto de la publicación: ");
                                         String textoPublicacion = entradaEscaner.nextLine();
-                                        if (usuario_en_sesion.getPublicaciones() == null) {
-                                            usuario_en_sesion.setPublicaciones(new ArrayList<>());
-                                        }
                                         usuario_en_sesion.getPublicaciones().add(new Publicacion(textoPublicacion, usuario_en_sesion));
 
                                         break;
-                                    case "2":
+                                    case 2:
                                         System.out.println("\nPublicar en el muro de un amigo\n1.Seleccionar amigo\nOtra tecla.- Volver a menú");
 
-                                        String seleccionAmigo = "";
-                                        String texto_pub = "";
+                                        
+                                        String texto_pub ="";
                                         Usuario amigoPublicar = null;
-                                        if (usuario_en_sesion.getAmigos().size() == 0) {
+                                        if (usuario_en_sesion.getAmigos().isEmpty()) {
                                             System.out.println("\n<<<<<<Sin amigos por mostrar>>>>>");
                                         } else {
                                             for (Usuario amigo : usuario_en_sesion.getAmigos()) {
-                                                seleccionAmigo = entradaEscaner.nextLine();
+                                                System.out.println(amigo.getNombre());
+                                                String seleccionAmigo = entradaEscaner.nextLine();
                                                 if (seleccionAmigo.equals("1")) {
                                                     amigoPublicar = amigo;
                                                     System.out.println("\nEscriba texto de publicación: ");
@@ -103,98 +116,45 @@ public class Tester {
                                         }
 
                                         break;
-                                    case "3":
-                                        System.out.println("\nMis Publicaciones:  \n");
-                                        if (usuario_en_sesion.getPublicaciones() == null) {
-                                            usuario_en_sesion.setPublicaciones(new ArrayList<>());
-                                        }
-
-                                        if (usuario_en_sesion.getPublicaciones().size() == 0) {
+                                        
+                                    case 3:
+                                        System.out.println("\n MI MURO:  \n");
+                                        
+                                        if (usuario_en_sesion.getPublicaciones().isEmpty()) {
                                             System.out.println("\n<<<<<<Sin publicaciones por mostrar>>>>>");
                                         } else {
                                             for (Publicacion iter : usuario_en_sesion.getPublicaciones()) {
                                                 System.out.println(iter);
                                                 System.out.println("\n1.Me gusta\t2.Me encanta\t3.Me divierte\t4.Me enoja\t5.Me entristese\tOtra tecla.-Seguir viendo");
                                                 String seleccionPub = entradaEscaner.nextLine();
-                                                if (seleccionPub.equals("1")) {
-                                                    if (iter.getReacciones() == null) {
-                                                        iter.setReacciones(new ArrayList<>());
-                                                    }
-                                                    iter.getReacciones().add(new Reaccion("Me gusta", usuario_en_sesion));
-                                                } else if (seleccionPub.equals("2")) {
-                                                    if (iter.getReacciones() == null) {
-                                                        iter.setReacciones(new ArrayList<>());
-                                                    }
-                                                    iter.getReacciones().add(new Reaccion("Me encanta", usuario_en_sesion));
-                                                } else if (seleccionPub.equals("3")) {
-                                                    if (iter.getReacciones() == null) {
-                                                        iter.setReacciones(new ArrayList<>());
-                                                    }
-                                                    iter.getReacciones().add(new Reaccion("Me divierte", usuario_en_sesion));
-                                                } else if (seleccionPub.equals("4")) {
-                                                    if (iter.getReacciones() == null) {
-                                                        iter.setReacciones(new ArrayList<>());
-                                                    }
-                                                    iter.getReacciones().add(new Reaccion("Me enoja", usuario_en_sesion));
-                                                } else if (seleccionPub.equals("5")) {
-                                                    if (iter.getReacciones() == null) {
-                                                        iter.setReacciones(new ArrayList<>());
-                                                    }
-                                                    iter.getReacciones().add(new Reaccion("Me entristece", usuario_en_sesion));
-                                                }
+                                                iter.Reaccionar(seleccionPub, usuario_en_sesion);
                                             }
-
-                                            System.out.println("\nPublicaciones de amigos\n");
+                                        }
+                                            System.out.println("\nPUBLICACIONES DE MIS AMIGOS\n");
                                             for (Usuario amigo : usuario_en_sesion.getAmigos()) {
-                                                System.out.println("\nPublicaciones de "+amigo.getNombre()+"\n");
-                                                if (amigo.getPublicaciones() == null) {
-                                                    amigo.setPublicaciones(new ArrayList<>());
-                                                }
+                                                System.out.println("\nPublicacion de: "+amigo.getNombre()+"\n");
+                                                
 
-                                                if (amigo.getPublicaciones().size() == 0) {
+                                                if (amigo.getPublicaciones().isEmpty()) {
                                                     System.out.println("\n<<<<<<Sin publicaciones por mostrar>>>>>\n");
                                                 } else {
                                                     for (Publicacion iter : amigo.getPublicaciones()) {
                                                         System.out.println(iter);
-                                                        System.out.println("\n1.Me gusta\t2.Me encanta\t3.Me divierte\t4.Me enoja\t5.Me entristese\tOtra tecla.-Seguir viendo");
+                                                        System.out.println("\n1.Me gusta\t2.Me encanta\t3.Me divierte\t4.Me enoja\t5.Me entristese \t Otra tecla.-Seguir viendo");
                                                         String seleccionPub = entradaEscaner.nextLine();
-                                                        if (seleccionPub.equals("1")) {
-                                                            if (iter.getReacciones() == null) {
-                                                                iter.setReacciones(new ArrayList<>());
-                                                            }
-                                                            iter.getReacciones().add(new Reaccion("Me gusta", usuario_en_sesion));
-                                                        } else if (seleccionPub.equals("2")) {
-                                                            if (iter.getReacciones() == null) {
-                                                                iter.setReacciones(new ArrayList<>());
-                                                            }
-                                                            iter.getReacciones().add(new Reaccion("Me encanta", usuario_en_sesion));
-                                                        } else if (seleccionPub.equals("3")) {
-                                                            if (iter.getReacciones() == null) {
-                                                                iter.setReacciones(new ArrayList<>());
-                                                            }
-                                                            iter.getReacciones().add(new Reaccion("Me divierte", usuario_en_sesion));
-                                                        } else if (seleccionPub.equals("4")) {
-                                                            if (iter.getReacciones() == null) {
-                                                                iter.setReacciones(new ArrayList<>());
-                                                            }
-                                                            iter.getReacciones().add(new Reaccion("Me enoja", usuario_en_sesion));
-                                                        } else if (seleccionPub.equals("5")) {
-                                                            if (iter.getReacciones() == null) {
-                                                                iter.setReacciones(new ArrayList<>());
-                                                            }
-                                                            iter.getReacciones().add(new Reaccion("Me entristece", usuario_en_sesion));
-                                                        }
+                                                        iter.Reaccionar(seleccionPub, amigo);
                                                     }
                                                 }
                                             }
-                                            break;
-                                        }
-                                        
-                                        break;
-                                        default:
                                             
                                         break;
+                                    case 4:
+                                        estado=false;
+                                        break;
+                                        
                                 }
+                            }
+                            break;
                                      //GRUPOS
                                     case 3:
                                         System.out.println("\nGRUPOS\n1.-Ver mis grupos\n2.-Unirse a grupos\n3.-Crear grupo\nOtra tecla.-Volver al menú");
@@ -310,11 +270,12 @@ public class Tester {
                                                 System.out.println("Ingrese el lugar:");
                                                 aux3.setLugar(entradaEscaner.nextLine());
                                                 System.out.println("Ingrese la fecha:");
-                                                aux3.setFecha(entradaEscaner.nextLine());
+                                                aux3.setFecha(ValidarFecha());
                                                 System.out.println("Ingrese la hora:");
-                                                aux3.setHora(entradaEscaner.nextLine());
+                                                aux3.setHora(ValidarHora());
                                                 System.out.println("Ingrese una descripción:");
                                                 aux3.setDescripcion(entradaEscaner.nextLine());
+                                                
                                                 usuario_en_sesion.getEventos().add(aux3);
                                                 break;
 
@@ -329,12 +290,13 @@ public class Tester {
                                         String opcionAmigos = entradaEscaner.nextLine();
                                         switch (Integer.parseInt(opcionAmigos)) {
                                             case 1:
-                                                if (usuario_en_sesion.getAmigos().size() == 0) {
+                                                if (usuario_en_sesion.getAmigos().isEmpty()) {
                                                     System.out.println("\n<<<<<<Sin amigos por mostrar>>>>>");
                                                 } else {
                                                     usuario_en_sesion.limpiarAmigosRepetidos();
                                                     for (Usuario usuarioAux : usuario_en_sesion.getAmigos()) {
                                                         System.out.println(usuarioAux);
+                                                        String wait = entradaEscaner.nextLine();
                                                     }
                                                 }
                                                 break;
@@ -343,32 +305,24 @@ public class Tester {
                                                 opcionAmigos = "";
                                                 int i = 0;
                                                 if (Usuarios.size() != 1) {
-                                                    while (opcionAmigos.equals("")) {
-                                                        if (!Usuarios.get(i).equals(usuario_en_sesion) || !usuario_en_sesion.getAmigos().contains(Usuarios.get(i))) {
-                                                            System.out.println("\n" + Usuarios.get(i));
+                                                    
+                                                    for(Usuario aux : Usuarios)
+                                                    {
+                                                        if((!aux.equals(usuario_en_sesion))&&!(usuario_en_sesion.getAmigos().contains(aux))){
+                                                            System.out.println(aux);
                                                             opcionAmigos = entradaEscaner.nextLine();
-                                                            if (opcionAmigos.equals("1")) {
-                                                                break;
+                                                            if(opcionAmigos.equals("1"))
+                                                            {
+                                                                aux.getSolicitudes().add(new Solicitud(usuario_en_sesion, null, false, new Date()));
+                                                                usuario_en_sesion.getSolicitudes().add(new Solicitud(null, aux, false, new Date()));
+                                                                System.out.println("\nSolicitud de amistad enviada a " + aux.getNombre());
                                                             }
                                                         }
-                                                        if (i + 1 == Usuarios.size()) {
-                                                            System.out.println("\n<<<<<<Fin lista de amigos>>>>>");
-                                                            opcionAmigos = "2";
-                                                        }
-                                                        i++;
                                                     }
+                                                
+                                                     
                                                 }
-                                                if (opcionAmigos.equals("1")) {
-                                                    if (Usuarios.get(i).getSolicitudes() == null) {
-                                                        Usuarios.get(i).setSolicitudes(new ArrayList<>());
-                                                    }
-                                                    if (usuario_en_sesion.getSolicitudes() == null) {
-                                                        usuario_en_sesion.setSolicitudes(new ArrayList<>());
-                                                    }
-                                                    Usuarios.get(i).getSolicitudes().add(new Solicitud(usuario_en_sesion, null, false, new Date()));
-                                                    usuario_en_sesion.getSolicitudes().add(new Solicitud(null, Usuarios.get(i), false, new Date()));
-                                                    System.out.println("\nSolicitud de amistad enviada a " + Usuarios.get(i).getNombre());
-                                                }
+                                                
                                                 break;
                                             case 3:
                                                 System.out.println("\nVER SOLICITUDES DE AMISTAD\n1.-Enviadas\n2.-Recibidas\n3.-Regresar menú");
@@ -421,7 +375,7 @@ public class Tester {
                                         break;
 
                                     default:
-                                        break;
+                                    break;
                                 }
                         }
                         break;
@@ -435,11 +389,11 @@ public class Tester {
                     System.out.println("Ingresar su clave:");
                     String clav = entradaEscaner.nextLine();
                     System.out.println("Correo:");
-                    String correo = entradaEscaner.nextLine();
+                    String correo = ValidarCorreo();
                     System.out.println("Genero:");
-                    String genero = entradaEscaner.nextLine();
+                    String genero = ValidarGenero();
                     System.out.println("Fecha Nacimiento:");
-                    String fechaNacimiento = entradaEscaner.nextLine();                    
+                    String fechaNacimiento = ValidarFecha();                    
                     System.out.println("Info adicional:");
                     String infoAd = entradaEscaner.nextLine();                    
                     nuevo.setNombre(nom);
@@ -448,7 +402,25 @@ public class Tester {
                     nuevo.setGenero(genero);
                     nuevo.setFecha_nacimiento(fechaNacimiento);
                     nuevo.setInfo_adicional(infoAd);
-                    Usuarios.add(nuevo);
+                    
+                    if(Usuarios.isEmpty())
+                        Usuarios.add(nuevo);
+                    try{
+                    for(Usuario aux:Usuarios)
+                    {
+                        if(aux.getClave().equals(nuevo.getClave()))
+                        {
+                            System.out.println("<< No se ha registrado Usuario >>"+ 
+                                    " << Cambie de contraseña >>");
+                            break;
+                        }
+                        else
+                        {
+                            Usuarios.add(nuevo);
+                            System.out.println("<< REGISTRADO >>");
+                        }
+                    }
+                    }catch(Exception e){}
                     break;
                 case 3:
                     break;
@@ -481,6 +453,8 @@ public class Tester {
     }
 
     public static void LeerArchivo() throws IOException, ClassNotFoundException {
+        
+        
         do {
             try ( //Leer del fichero
                     ObjectInputStream writeData = new ObjectInputStream(new FileInputStream(path_fichero))) {
@@ -503,9 +477,23 @@ public class Tester {
             catch (FileNotFoundException e2) {
                 //e2.printStackTrace();
                 Scanner in = new Scanner(System.in);
-                System.out.println(" <<< Es probable que haya cambiado la ruta de la fuente de datos >>> ");
-                System.out.println(" <<< POR FAVOR INTRODUZCA LA NUEVA RUTA >>> ");
-                path_fichero = in.nextLine();
+                System.out.println(" <<< ERROR CON LA FUENTE DE DATOS >>> ");
+                System.out.println(" <<< Es probable que haya cambiado la ruta de la fuente de datos >>> \n");
+                System.out.println(" <<< 1.-POR FAVOR INTRODUZCA LA NUEVA RUTA DE ORIGEN DE DATOS >>> ");
+                System.out.println(" <<< 2.-CREAR NUEVA FUENTE DE ORIGEN DE DATOS (ESPECIFICAR RUTA) >>> \\...fichero.txt ");
+                System.out.println("---- Elija una opcion ----");
+                String op = in.nextLine();
+                if(op.equals("1")){
+                    System.out.println("---- Escriba la ruta ---");
+                    path_fichero = in.nextLine();
+                }else if(op.equals("2"))
+                {
+                    System.out.println("---- Escriba la ruta ---");
+                    path_fichero = in.nextLine();
+                    File nuevo = new File(path_fichero);
+                    try{nuevo.createNewFile();}
+                    catch(Exception e){ System.out.println("--- No existe la ruta ---");}
+                }
                 //in.next();
             }
         } while (true);
@@ -513,6 +501,7 @@ public class Tester {
 
     public static void EscribirArchivo() {
 
+        
         Usuario user = new Usuario();
         user.setNombre("Jimmy");
         user.setClave("12345");
@@ -538,8 +527,11 @@ public class Tester {
         user2.setGenero("Masculino");
         user2.setFecha_nacimiento("9 de septiembre de 1999");
         user2.setInfo_adicional("Me gusta la música gitana");
-        //System.out.println(user2);
-        //user2.getAmigos().add(user);
+        
+        /*ESTOS USUARIOS CREADOS SON PARA LLENAR EL FICHERO Y HACER PRUEBAS 
+          SI NECESITA USARLOS SOLO MODIFIQUE: COMENTE EL LAZO FOR Y DESCOMENTE readData.writeObject(user); 
+          EJECUTE UNA VEZ LA APLICACION SALGA NORMALMENTE Y DEJAR COMO AL INICIO
+        */
 
         try ( //Escribir en el fichero
                 ObjectOutputStream readData = new ObjectOutputStream(new FileOutputStream(path_fichero))) {
@@ -574,4 +566,90 @@ public class Tester {
         return a;
     }
 
+    private static String ValidarFecha() {
+        int i=0;
+        String regexp = "\\d{1,2}/\\d{1,2}/\\d{4}";
+        String fecha="";
+        Scanner capturar = new Scanner(System.in);
+        while(i==0){
+               fecha=capturar.nextLine();
+            if(Pattern.matches(regexp, fecha))
+            {
+                i=1;
+                
+            }
+            else{
+                System.out.println("Formato: dd/mm/yyyy");
+            }
+        }
+        //capturar.close();
+        return fecha;
+    }
+    
+    private static String ValidarCorreo() {
+        int i=0;
+        String emailRegexp = "[^@]+@[^@]+\\.[a-zA-Z]{2,}";
+        
+        
+        
+        String correo="";
+        Scanner capturar = new Scanner(System.in);
+        while(i==0){
+               correo=capturar.nextLine();
+            if(Pattern.matches(emailRegexp, correo))
+            {
+                i=1;
+                
+            }
+            else{
+                System.out.println("Formato: [a-z]@[a-z].[aa-zz]");
+            }
+        }
+        //capturar.close();
+        return correo;
+    }
+    
+    private static String ValidarGenero() {
+        int i=0;
+        String genRegexp = "(?i)(masculino|femenino)";       
+        String gen="";
+        Scanner capturar = new Scanner(System.in);
+        while(i==0){
+               gen=capturar.nextLine();
+            if(Pattern.matches(genRegexp, gen))
+            {
+                i=1;
+                
+            }
+            else{
+                System.out.println("Formato: Masculino o Femenino");
+            }
+        }
+        //capturar.close();
+        return gen;
+    }
+
+    private static String ValidarHora() {
+        int i=0;
+        String genRegexp = "\\d{1,2}:\\d{1,2}";       
+        String gen="";
+        Scanner capturar = new Scanner(System.in);
+        while(i==0){
+               gen=capturar.nextLine();
+            if(Pattern.matches(genRegexp, gen))
+            {
+                i=1;
+                
+            }
+            else{
+                System.out.println("Formato: hh:mm");
+            }
+        }
+        //capturar.close();
+        return gen; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
 }
+

@@ -35,6 +35,8 @@ public class Reaccion implements Serializable{
         this.dueño = dueño;
     }
 
+    
+    
     @Override
     public String toString() {
         return "("+nombre + " por: " + dueño.getNombre()+")";
